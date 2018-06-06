@@ -1,2 +1,2 @@
-model_checkpoint_path: "/home/jinxi/Downloads/cv-tricks.com-master/Tensorflow-tutorials/tutorial-2-image-classifier/checkpoints/dogs-cats-model"
-all_model_checkpoint_paths: "/home/jinxi/Downloads/cv-tricks.com-master/Tensorflow-tutorials/tutorial-2-image-classifier/checkpoints/dogs-cats-model"
+model_checkpoint_path: "/home/jinxi/Desktop/tutorial-2-image-classifier/checkpoints/dogs-cats-model"
+all_model_checkpoint_paths: "/home/jinxi/Desktop/tutorial-2-image-classifier/checkpoints/dogs-cats-model"
