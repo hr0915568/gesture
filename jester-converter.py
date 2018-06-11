@@ -5,9 +5,9 @@ import numpy as np
 import math
 
 #settings:
-jester_dataset_dir = '/home/jinxi/20bn-datasets/20bn-jester-v1/'
+jester_dataset_dir = '/mnt/storage/20bn-datasets/20bn-jester-v1/'
 number_of_images_to_merge = 10
-outout_directory = '/home/jinxi/test/'
+outout_directory = '/mnt/storage/out/'
 
 # function to create an image of the swipe action.
 def create_image(id):
@@ -45,8 +45,8 @@ def merge_images(images):
 
     return first_image
 
-def write_image(image, filename):
-    target = outout_directory + filename
+def write_image(image, filename, type):
+    target = outout_directory + type + '/' + filename
     cv.imwrite(target, image)
 
 with open('jester.csv', newline='') as csvfile:
@@ -57,8 +57,10 @@ with open('jester.csv', newline='') as csvfile:
             # row[0] = id
             # row[1] = action
             merged_image = create_image(row[0])
-            write_image(merged_image, row[0]+'.jpg')
-            print(', '.join(row))
+            write_image(merged_image, row[0]+'.jpg', 'swipe_left')
+        else:
+            merged_image = create_image(row[0])
+            write_image(merged_image, row[0] + '.jpg', 'unknown')
 
 
 
