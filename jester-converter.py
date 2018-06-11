@@ -3,6 +3,7 @@ import cv2 as cv
 import os, os.path
 import numpy as np
 import math
+from multiprocessing import Pool
 
 #settings:
 jester_dataset_dir = '/mnt/storage/20bn-datasets/20bn-jester-v1/'
@@ -49,18 +50,24 @@ def write_image(image, filename, type):
     target = outout_directory + type + '/' + filename
     cv.imwrite(target, image)
 
+def process_row(row):
+    if (row[1] == 'Swiping Left' or row[1] == 'Swiping Right'):
+        # row[0] = id
+        # row[1] = action
+        merged_image = create_image(row[0])
+        write_image(merged_image, row[0] + '.jpg', 'swipe')
+    elif (row[1] == 'No gesture' or row[1] == 'Doing other things'):
+        merged_image = create_image(row[0])
+        write_image(merged_image, row[0] + '.jpg', 'unknown')
+
+p = Pool(75)
 with open('jester.csv', newline='') as csvfile:
     count = 0;
     reader = csv.reader(csvfile, delimiter=';', quotechar='|')
     for row in reader:
-        if (row[1] == 'Swiping Left'):
-            # row[0] = id
-            # row[1] = action
-            merged_image = create_image(row[0])
-            write_image(merged_image, row[0]+'.jpg', 'swipe_left')
-        else:
-            merged_image = create_image(row[0])
-            write_image(merged_image, row[0] + '.jpg', 'unknown')
+        p.map(process_row, [row])
+
+
 
 
 
